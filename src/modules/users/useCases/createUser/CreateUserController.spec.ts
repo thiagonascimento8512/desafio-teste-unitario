@@ -5,6 +5,7 @@ import { app } from "../../../../app";
 import { UsersRepository } from "../../repositories/UsersRepository";
 import { CreateUserController } from "./CreateUserController";
 import { CreateUserUseCase } from "./CreateUserUseCase";
+import { CreateUserError } from "./CreateUserError";
 
 let connection: Connection;
 let createUserController: CreateUserController;
@@ -34,7 +35,20 @@ describe("Create User Controller", () => {
     const response = await request(app).post("/api/v1/users").send(user);
 
     expect(response.status).toBe(201);
-
   });
 
+  it("should not be able to create a new user with an email that already exists", async () => {
+    const user = {
+      name: "User Example",
+      email: "user@email.com",
+      password: "1234",
+    };
+
+    await request(app).post("/api/v1/users").send(user);
+
+    const response = await request(app).post("/api/v1/users").send(user);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty("message");
+  });
 });
