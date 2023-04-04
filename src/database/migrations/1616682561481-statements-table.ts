@@ -55,6 +55,7 @@ export class accountsTable1616682561481 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropForeignKey('statements', 'statements');
     await queryRunner.dropTable('statements');
   }
 

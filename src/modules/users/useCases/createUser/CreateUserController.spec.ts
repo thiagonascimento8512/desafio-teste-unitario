@@ -1,14 +1,10 @@
-import { createConnection } from "typeorm";
+import { Connection, createConnection } from "typeorm";
 import request from "supertest";
-import { Connection } from "typeorm/connection/Connection";
 import { app } from "../../../../app";
 import { UsersRepository } from "../../repositories/UsersRepository";
-import { CreateUserController } from "./CreateUserController";
 import { CreateUserUseCase } from "./CreateUserUseCase";
-import { CreateUserError } from "./CreateUserError";
 
 let connection: Connection;
-let createUserController: CreateUserController;
 let createUserUseCase: CreateUserUseCase;
 
 describe("Create User Controller", () => {
